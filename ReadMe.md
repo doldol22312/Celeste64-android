@@ -1,6 +1,8 @@
 # Celeste64 Android Port
 
-This fork ports *Celeste 64: Fragments of the Mountain* to Android. The current goal is a playable APK first: gamepad controls, fullscreen rendering, FMOD audio, and a small Android FPS counter are working.
+![Celeste64 Android running on a phone](docs/celeste.png)
+
+This fork ports *Celeste 64: Fragments of the Mountain* to Android. The current goal is a playable APK first: gamepad controls, fullscreen rendering, and FMOD audio are working.
 
 The original game was made by the Celeste developers in under 2 weeks for Celeste's 6th Anniversary. You can find the official prebuilt desktop version on [itch.io](https://maddymakesgamesinc.itch.io/celeste64).
 
@@ -11,7 +13,6 @@ The original game was made by the Celeste developers in under 2 weeks for Celest
 - Uses the existing gamepad input path; Xbox controller input has been tested.
 - FMOD audio works with the Android FMOD 2.02.18 runtime.
 - The game renders fullscreen on wide Android displays, including display cutout areas.
-- Android builds show an FPS counter in the top-right corner.
 - Touch controls are not implemented yet.
 
 ## Android Build Requirements
