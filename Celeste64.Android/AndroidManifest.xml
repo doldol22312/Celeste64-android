@@ -5,6 +5,8 @@
   <application
     android:allowBackup="false"
     android:extractNativeLibs="true"
+    android:icon="@mipmap/icon"
     android:label="Celeste 64"
+    android:roundIcon="@mipmap/icon"
     android:supportsRtl="true" />
 </manifest>
