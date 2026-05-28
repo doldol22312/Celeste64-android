@@ -5,7 +5,7 @@ using Android.Runtime;
 namespace Celeste64.Android;
 
 [Activity(
-	Label = Celeste64.Game.GameTitle,
+	Label = "celeste64",
 	MainLauncher = true,
 	ScreenOrientation = ScreenOrientation.Landscape,
 	Theme = "@android:style/Theme.NoTitleBar.Fullscreen",
