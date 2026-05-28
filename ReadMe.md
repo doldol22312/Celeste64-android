@@ -28,6 +28,22 @@ The original game was made by the Celeste developers in under 2 weeks for Celest
 - Play Store / Android App Bundle packaging has not been set up; releases are direct APK downloads.
 - Android-specific menus for controls, graphics, or audio settings have not been added.
 
+## Phone Requirements
+
+Minimum target:
+
+- Android 6.0 Marshmallow / API 23 or newer.
+- 64-bit ARM device with `arm64-v8a` support.
+- OpenGL ES 3.0 capable GPU.
+- Bluetooth, USB, or built-in gamepad input.
+- Around 100 MB of free storage for the APK and first-run content extraction.
+
+Recommended until more devices are tested:
+
+- Android 10 or newer.
+- 2 GB RAM or more.
+- A physical gamepad; touch-only play is not supported yet.
+
 ## Android Build Requirements
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
