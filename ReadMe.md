@@ -1,6 +1,8 @@
 # Celeste64 Android Port
 
-![Celeste64 Android running on a phone](docs/celeste.png)
+<p align="center">
+  <img src="docs/celeste.png" alt="Celeste64 Android running on a phone" width="720">
+</p>
 
 This fork ports *Celeste 64: Fragments of the Mountain* to Android. The current goal is a playable APK first: gamepad controls, fullscreen rendering, and FMOD audio are working.
 
