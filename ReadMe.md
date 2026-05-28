@@ -10,12 +10,23 @@ The original game was made by the Celeste developers in under 2 weeks for Celest
 
 ## Android Status
 
+### What Works
+
 - Boots and runs as a native Android APK through .NET 8 for Android and a native Foster/SDL platform library.
-- Targets `android-arm64` / `arm64-v8a`.
-- Uses the existing gamepad input path; Xbox controller input has been tested.
-- FMOD audio works with the Android FMOD 2.02.18 runtime.
-- The game renders fullscreen on wide Android displays, including display cutout areas.
-- Touch controls are not implemented yet.
+- Playable with a connected gamepad; Xbox controller input has been tested.
+- FMOD music and sound effects work with the Android FMOD 2.02.18 runtime.
+- Game content is packaged into the APK and extracted into app storage on first run.
+- Fullscreen rendering works on wide Android displays, including display cutout areas.
+- Android launcher icon and app label are set.
+- Release APK builds for `android-arm64` / `arm64-v8a`.
+
+### What Does Not Work Yet
+
+- Touch controls and on-screen buttons are not implemented.
+- Only `arm64-v8a` APKs are built right now; there is no `armeabi-v7a`, x86, or x86_64 release.
+- Device coverage is lightly tested, mostly on one physical Android phone.
+- Play Store / Android App Bundle packaging has not been set up; releases are direct APK downloads.
+- Android-specific menus for controls, graphics, or audio settings have not been added.
 
 ## Android Build Requirements
 
