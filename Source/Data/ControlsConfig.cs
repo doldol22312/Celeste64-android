@@ -9,6 +9,8 @@ public class ControlsConfig
 
 	public class Binding
 	{
+		private const int ControllerBindingCount = InputState.MaxControllers;
+
 		public Keys? Key { get; set; }
 		public MouseButtons? MouseButton { get; set; }
 		public Buttons? Button { get; set; }
@@ -57,13 +59,15 @@ public class ControlsConfig
 				button.Add(Key.Value);
 
 			if (Button.HasValue)
-				button.Add(Condition, 0, Button.Value);
+				for (int controller = 0; controller < ControllerBindingCount; controller++)
+					button.Add(Condition, controller, Button.Value);
 
 			if (MouseButton.HasValue)
 				button.Add(MouseButton.Value);
 
 			if (Axis.HasValue)
-				button.Add(Condition, 0, Axis.Value, AxisInverted ? -1 : 1, AxisDeadzone);
+				for (int controller = 0; controller < ControllerBindingCount; controller++)
+					button.Add(Condition, controller, Axis.Value, AxisInverted ? -1 : 1, AxisDeadzone);
 		}
 	}
 

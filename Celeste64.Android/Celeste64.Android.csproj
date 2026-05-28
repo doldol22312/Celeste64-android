@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <SupportedOSPlatformVersion>23</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationId>com.celeste64.android</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <PublishTrimmed>false</PublishTrimmed>
+    <RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Source\**\*.cs" Exclude="..\Source\Program.cs" Link="Source\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ThirdParty\Foster\Framework\Foster.Framework.csproj" />
+    <PackageReference Include="SharpGLTF.Runtime" Version="1.0.0-alpha0031" />
+    <PackageReference Include="Sledge.Formats.Map" Version="1.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AndroidAsset Include="..\Content\**\*"
+      Exclude="..\Content\Models\Sources\**;..\Content\FMOD\**;..\Content\**\*.aseprite;..\Content\**\*.blend;..\Content\**\*.blend1;..\Content\**\*.fgd;..\Content\**\*.md"
+      Link="Content\%(RecursiveDir)%(Filename)%(Extension)" />
+    <AndroidLibrary Update="Java\Libs\fmod.jar" Bind="false" />
+    <AndroidJavaSource Update="Java\org\libsdl\app\*.java" Bind="false" />
+    <AndroidNativeLibrary Update="Native\arm64-v8a\libFosterPlatform.so" Abi="arm64-v8a" />
+    <AndroidNativeLibrary Update="Native\arm64-v8a\libfmod.so" Abi="arm64-v8a" />
+    <AndroidNativeLibrary Update="Native\arm64-v8a\libfmodstudio.so" Abi="arm64-v8a" />
+  </ItemGroup>
+
+</Project>

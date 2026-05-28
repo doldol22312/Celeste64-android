@@ -8,3 +8,7 @@ Content/Maps/autosave
 Content/FMOD/celeste64/.cache
 Content/FMOD/celeste64/.user
 Content/FMOD/celeste64/.unsaved
+.codex-tmp
+ThirdParty/Foster/build
+ThirdParty/Foster/build-*
+fmodstudioapi*.tar.gz

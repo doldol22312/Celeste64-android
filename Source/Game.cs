@@ -58,6 +58,10 @@ public class Game : Module
 	private readonly FMOD.Studio.EVENT_CALLBACK audioEventCallback;
 	private int audioBeatCounter;
 	private bool audioBeatCounterEvent;
+	private double fpsLastTime;
+	private double fpsElapsed;
+	private int fpsFrames;
+	private int currentFps;
 
 	public AudioHandle Ambience;
 	public AudioHandle Music;
@@ -292,6 +296,7 @@ public class Game : Module
 
 	public override void Render()
 	{
+		UpdateFpsCounter();
 		Graphics.Clear(Color.Black);
 
 		if (transitionStep != TransitionStep.Perform && transitionStep != TransitionStep.Hold)
@@ -310,12 +315,69 @@ public class Game : Module
 
 			// draw the target to the window
 			{
-				var scale = Math.Min(App.WidthInPixels / (float)target.Width, App.HeightInPixels / (float)target.Height);
+				var scaleX = App.WidthInPixels / (float)target.Width;
+				var scaleY = App.HeightInPixels / (float)target.Height;
+				var scale = OperatingSystem.IsAndroid() ? Math.Max(scaleX, scaleY) : Math.Min(scaleX, scaleY);
 				batcher.SetSampler(new(TextureFilter.Nearest, TextureWrap.ClampToEdge, TextureWrap.ClampToEdge));
 				batcher.Image(target, App.SizeInPixels / 2, target.Bounds.Size / 2, Vec2.One * scale, 0, Color.White);
 				batcher.Render();
 				batcher.Clear();
 			}
+		}
+
+		RenderFpsCounter();
+	}
+
+	private void UpdateFpsCounter()
+	{
+		var now = App.Timer.Elapsed.TotalSeconds;
+		if (fpsLastTime <= 0)
+		{
+			fpsLastTime = now;
+			return;
+		}
+
+		var delta = now - fpsLastTime;
+		fpsLastTime = now;
+		if (delta <= 0)
+			return;
+
+		fpsElapsed += delta;
+		fpsFrames++;
+
+		if (fpsElapsed >= 0.5)
+		{
+			currentFps = (int)Math.Round(fpsFrames / fpsElapsed);
+			fpsElapsed = 0;
+			fpsFrames = 0;
+		}
+	}
+
+	private void RenderFpsCounter()
+	{
+		if (!OperatingSystem.IsAndroid() || currentFps <= 0)
+			return;
+
+		try
+		{
+			var font = Language.Current.SpriteFont;
+			var text = $"{currentFps} FPS";
+			const float scale = 2.0f;
+			var at = new Vec2((App.WidthInPixels - 16) / scale, 12 / scale);
+
+			batcher.PushMatrix(Matrix3x2.CreateScale(scale));
+			for (int x = -1; x <= 1; x++)
+				for (int y = -1; y <= 1; y++)
+					if (x != 0 || y != 0)
+						batcher.Text(font, text, at + new Vec2(x, y), new Vec2(1, 0), Color.Black);
+			batcher.Text(font, text, at, new Vec2(1, 0), 0x84FF54);
+			batcher.PopMatrix();
+			batcher.Render();
+			batcher.Clear();
+		}
+		catch
+		{
+			batcher.Clear();
 		}
 	}
 

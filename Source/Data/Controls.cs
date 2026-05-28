@@ -94,6 +94,15 @@ public static class Controls
 	private static string GetPromptLocation(string name)
 	{
 		var gamepad = Input.Controllers[0];
+		for (int i = 0; i < Input.Controllers.Count; i++)
+		{
+			if (Input.Controllers[i].Connected)
+			{
+				gamepad = Input.Controllers[i];
+				break;
+			}
+		}
+
 		var deviceTypeName = 
 			gamepad.Connected ? GetControllerName(gamepad.Gamepad) : "PC";
 

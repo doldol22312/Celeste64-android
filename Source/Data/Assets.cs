@@ -33,6 +33,11 @@ public static class Assets
 		}
 	}
 
+	public static void SetContentPath(string path)
+	{
+		contentPath = path;
+	}
+
 	public static readonly Dictionary<string, Map> Maps = new(StringComparer.OrdinalIgnoreCase);
 	public static readonly Dictionary<string, Shader> Shaders = new(StringComparer.OrdinalIgnoreCase);
 	public static readonly Dictionary<string, Texture> Textures = new(StringComparer.OrdinalIgnoreCase);
@@ -227,12 +232,19 @@ public static class Assets
 			StringBuilder vertex = new();
 			StringBuilder fragment = new();
 			StringBuilder? target = null;
+			bool fragmentTarget = false;
 			foreach (var line in File.ReadAllLines(file))
 			{
 				if (line.StartsWith("VERTEX:"))
+				{
 					target = vertex;
+					fragmentTarget = false;
+				}
 				else if (line.StartsWith("FRAGMENT:"))
+				{
 					target = fragment;
+					fragmentTarget = true;
+				}
 				else if (line.StartsWith("#include"))
 				{
 					var path = Path.Join(Path.GetDirectoryName(file), line[9..]);
@@ -242,7 +254,7 @@ public static class Assets
 						throw new Exception($"Unable to find shader include: '{path}'");
 				}
 				else
-					target?.AppendLine(line);
+					AppendShaderLine(target, line, fragmentTarget);
 			}
 
 			data = new(
@@ -252,6 +264,23 @@ public static class Assets
 		}
 
 		return data.HasValue ? new Shader(data.Value) : null;
+	}
+
+	private static void AppendShaderLine(StringBuilder? target, string line, bool fragment)
+	{
+		if (target == null)
+			return;
+
+#if ANDROID
+		if (line.StartsWith("#version 330", StringComparison.Ordinal))
+		{
+			target.AppendLine("#version 300 es");
+			target.AppendLine(fragment ? "precision highp float;" : "precision highp float;");
+			return;
+		}
+#endif
+
+		target.AppendLine(line);
 	}
 }
 

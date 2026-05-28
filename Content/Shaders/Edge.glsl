@@ -11,7 +11,7 @@ out vec4 v_col;
 out vec4 v_type;
 void main(void)
 {
-	gl_Position = u_matrix * vec4(a_position.xy, 0, 1);
+	gl_Position = u_matrix * vec4(a_position.xy, 0.0, 1.0);
 	v_tex = a_tex;
 	v_col = a_color;
 	v_type = a_type;
@@ -40,10 +40,10 @@ void main(void)
 	// get depth and adjacent depth values
 	float it = depth(v_tex);
 	float other = 
-		depth(v_tex + vec2(u_pixel.x, 0)) * 0.25 +
-		depth(v_tex + vec2(-u_pixel.x, 0)) * 0.25 +
-		depth(v_tex + vec2(0, u_pixel.y)) * 0.25 +
-		depth(v_tex + vec2(0, -u_pixel.y)) * 0.25;
+		depth(v_tex + vec2(u_pixel.x, 0.0)) * 0.25 +
+		depth(v_tex + vec2(-u_pixel.x, 0.0)) * 0.25 +
+		depth(v_tex + vec2(0.0, u_pixel.y)) * 0.25 +
+		depth(v_tex + vec2(0.0, -u_pixel.y)) * 0.25;
 	
 	// more edge the closer to the screen
 	float edge = step(0.001, other - it);

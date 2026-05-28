@@ -71,8 +71,8 @@ void main(void)
 	//	discard;
 
 	float depth = LinearizeDepth(gl_FragCoord.z, u_near, u_far);
-	float fall = Map(v_world.z, 50, 0, 0, 1);
-	float fade = Map(depth, 0.9, 1, 1, 0);
+	float fall = Map(v_world.z, 50.0, 0.0, 0.0, 1.0);
+	float fade = Map(depth, 0.9, 1.0, 1.0, 0.0);
 	vec3  col = src.rgb;
 
 	// apply depth values
@@ -80,11 +80,11 @@ void main(void)
 
 	// lighten texture color based on normal
 	float lighten = max(0.0, -dot(v_normal, u_sun));
-	col = mix(col, vec3(1,1,1), lighten * 0.10 * u_effects);
+	col = mix(col, vec3(1.0, 1.0, 1.0), lighten * 0.10 * u_effects);
 
 	// shadow
 	float darken = max(0.0, dot(v_normal, u_sun));
-	col = mix(col, vec3(4/255.0, 27/255.0, 44/255.0), darken * 0.80 * u_effects);
+	col = mix(col, vec3(4.0 / 255.0, 27.0 / 255.0, 44.0 / 255.0), darken * 0.80 * u_effects);
 
 	// passthrough mode
 	col = mix(col, u_silhouette_color.rgb, u_silhouette);

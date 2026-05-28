@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net8.0;net8.0-android</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Title>Foster</Title>
+    <Product>Foster</Product>
+    <Version>0.1.18-alpha</Version>
+    <Authors>Noel Berry</Authors>
+    <Description>A small 2D cross-platform Game Framework</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/FosterFramework/Foster</RepositoryUrl>
+    <PackageId>FosterFramework</PackageId>
+    <PackageProjectUrl>https://github.com/FosterFramework/Foster</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageOutputPath>$(SolutionDir)artifacts/</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NativeLibsDir>$(ProjectDir)..\Platform\libs\</NativeLibsDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net8.0-android'">
+    <Content Include="$(NativeLibsDir)x64\FosterPlatform.dll">
+      <CopyToOutputDirectory Condition="$([MSBuild]::IsOSPlatform('Windows'))">PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\win-x64\native</PackagePath>
+      <Pack>True</Pack>
+      <Link>FosterPlatform.dll</Link>
+    </Content>
+    <Content Include="$(NativeLibsDir)lib64\libFosterPlatform.so">
+      <CopyToOutputDirectory Condition="$([MSBuild]::IsOSPlatform('Linux')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'X64'">PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\linux-x64\native</PackagePath>
+      <Pack>True</Pack>
+      <Link>libFosterPlatform.so</Link>
+    </Content>
+    <Content Include="$(NativeLibsDir)libarm64\libFosterPlatform.so">
+      <CopyToOutputDirectory Condition="$([MSBuild]::IsOSPlatform('Linux')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm64'">PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\linux-arm64\native</PackagePath>
+      <Pack>True</Pack>
+      <Link>libFosterPlatform.so</Link>
+    </Content>
+    <Content Include="$(NativeLibsDir)libarm\libFosterPlatform.so">
+      <CopyToOutputDirectory Condition="$([MSBuild]::IsOSPlatform('Linux')) AND '$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)' == 'Arm'">PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\linux-arm\native</PackagePath>
+      <Pack>True</Pack>
+      <Link>libFosterPlatform.so</Link>
+    </Content>
+    <Content Include="$(NativeLibsDir)osx\libFosterPlatform.dylib">
+      <CopyToOutputDirectory Condition="$([MSBuild]::IsOSPlatform('OSX'))">PreserveNewest</CopyToOutputDirectory>
+      <PackagePath>runtimes\osx\native</PackagePath>
+      <Pack>True</Pack>
+      <Link>libFosterPlatform.dylib</Link>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="$(ProjectDir)..\LICENSE" Pack="true" PackagePath="/"/>
+    <None Include="$(ProjectDir)..\README.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+</Project>
